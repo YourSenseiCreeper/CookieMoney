@@ -5,6 +5,9 @@ import java.util.UUID;
 
 import org.bukkit.ChatColor;
 
+import me.gastherr.cookiemoney.commands.CookieCMD;
+import me.gastherr.cookiemoney.event.CookieAmountUpdater;
+import me.gastherr.cookiemoney.event.PlayerInAndOut;
 import me.gastherr.cookiemoney.util.ConfigManager;
 
 public class CookieBase {
@@ -17,6 +20,10 @@ public class CookieBase {
 		this.setPlugin(plugin);
 		cm = new ConfigManager(this);
 		players = cm.playerLoader();
+		
+		new CookieAmountUpdater(this);
+		new PlayerInAndOut(this);
+		new CookieCMD(this);
 	}
 	
 	public CookieMoney getPlugin() {

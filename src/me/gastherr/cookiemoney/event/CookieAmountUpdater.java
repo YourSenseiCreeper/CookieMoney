@@ -1,5 +1,6 @@
 package me.gastherr.cookiemoney.event;
 
+import java.util.Collection;
 import java.util.UUID;
 
 import me.gastherr.cookiemoney.CookieBase;
@@ -9,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class CookieAmountUpdater implements Listener{
 	
@@ -26,8 +28,18 @@ public class CookieAmountUpdater implements Listener{
 		UUID uid = p.getUniqueId();
 		
 		if (p.getInventory().contains(Material.COOKIE)){
-			int cookies = cb.getPlayers().replace(uid, p.getInventory().first(Material.COOKIE));
-			p.sendMessage("Ciastka: "+cookies);
+			
+			int cookies = 0;
+			@SuppressWarnings("unchecked")
+			Collection<ItemStack> its = (Collection<ItemStack>) p.getInventory().all(Material.COOKIE).values();
+			for (ItemStack i : its){
+				cookies += i.getAmount();
+			}
+			int amount = cb.getPlayers().get(uid);
+			if (cookies != amount){
+				cb.getPlayers().replace(uid, cookies);
+				p.sendMessage("Ciastka: "+cookies);
+			}
 			return;
 		}else{
 			cb.getPlayers().replace(uid, 0);

@@ -79,17 +79,18 @@ public class ConfigManager{
 		int pkt = base.getPlayers().get(uid);
 		
 		if (pkt != pktConfig){
+			config.set(uid.toString(), pkt);
+			return;
+		}else if(pkt == 0){
 			if (config.contains(uid.toString())){
-				config.set(uid.toString(), pkt);
-				return;
-			}else if(pkt == 0 && config.contains(uid.toString())){
 				config.set(uid.toString(), null);
-				return;
-			}else{
-				config.createSection(uid.toString());
-				config.set(uid.toString(), pkt);
-				return;
 			}
+			base.getPlayers().remove(uid);
+			return;
+		}else{
+			config.createSection(uid.toString());
+			config.set(uid.toString(), pkt);
+			return;
 		}
 		
 	}

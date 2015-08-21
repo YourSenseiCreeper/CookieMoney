@@ -15,13 +15,14 @@ public class CookieMoney extends JavaPlugin{
 		cb = new CookieBase(this);
 		cbapi = new CookieMoneyAPI(cb);
 		con = Bukkit.getConsoleSender();
-		con.sendMessage("Welcome to CookieMoney!");
+		con.sendMessage(cb.color("&f[&2CookieMoney&f] Enabling &2v"+this.getDescription().getVersion()+"&f by&2 "+this.getDescription().getAuthors().get(0)));
 	}
 	
 	@Override
 	public void onDisable() {
 		con.sendMessage("CookieMoney will back soon!");
 		cb.getConfig().save();
+		this.getDescription().getVersion();
 	}
 
 	/**

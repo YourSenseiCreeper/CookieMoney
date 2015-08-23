@@ -11,7 +11,10 @@ import org.bukkit.entity.Player;
 
 public class CookieCMD implements CommandExecutor{
 	
+	private CookieBase base;
+	
 	public CookieCMD(CookieBase base){
+		this.base = base;
 		base.getPlugin().getCommand("cookies").setExecutor(this);
 		base.getPlugin().getCommand("cookie").setExecutor(this);
 	}
@@ -49,6 +52,7 @@ public class CookieCMD implements CommandExecutor{
 			
 			Player p = (Player) s;
 			p.openInventory(new CookieContainer().createInventory(p));
+			base.getInBank().put(p.getUniqueId(), true);
 		
 	}
 	

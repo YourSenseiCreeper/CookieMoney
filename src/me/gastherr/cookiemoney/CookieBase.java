@@ -15,13 +15,13 @@ public class CookieBase {
 	private CookieMoney plugin;
 	protected ConfigManager cm;
 	protected HashMap<UUID, Integer> players;
-	protected HashMap<UUID, Boolean> safeTransfer;
+	protected HashMap<UUID, Boolean> inBank;
 	
 	public CookieBase(CookieMoney plugin){
 		this.setPlugin(plugin);
 		cm = new ConfigManager(this);
 		players = cm.playerLoader();
-		safeTransfer = new HashMap<>();
+		inBank = new HashMap<>();
 		
 		// new CookieAmountUpdater(this); TO REMOVE
 		new PlayerInAndOut(this);
@@ -50,8 +50,8 @@ public class CookieBase {
 		return this.cm;
 	}
 	
-	public HashMap<UUID, Boolean> getSafeTransfer(){
-		return this.safeTransfer;
+	public HashMap<UUID, Boolean> getInBank(){
+		return this.inBank;
 	}
 
 }

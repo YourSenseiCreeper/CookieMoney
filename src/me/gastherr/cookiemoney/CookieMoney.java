@@ -22,7 +22,6 @@ public class CookieMoney extends JavaPlugin{
 	public void onDisable() {
 		con.sendMessage("CookieMoney will back soon!");
 		cb.getConfig().save();
-		this.getDescription().getVersion();
 	}
 
 	/**

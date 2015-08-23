@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 public class ConfigManager{
 	
@@ -61,6 +62,15 @@ public class ConfigManager{
 		    players.put(ud, points);
 		    all++;
 		}
+		@SuppressWarnings("deprecation")
+		Player[] pl = Bukkit.getOnlinePlayers();
+		if(pl.length != 0){
+			for(Player p : pl){
+				UUID uid = p.getUniqueId();
+				players.put(uid, 0);
+			}
+		}
+		
 		con.sendMessage(base.color("&f[&2CookieMoney&f] All saved players ("+all+") loaded!"));
 		return players;
 	}
@@ -97,7 +107,6 @@ public class ConfigManager{
 	
 	public void save(){
 		playerSaver();
-		savePluginConfig("config");
 	}
 
 }

@@ -82,27 +82,75 @@ public class CookieMoneyAPI{
 	 * Dodaje ilosc ciastek amount do ogólnej liczby ciastek gracza p.
 	 * @param p Gracz któremu dodawane s¹ ciastka
 	 * @param amount Ilosc ciastek do dodania
+	 * @return Ilosc ciastek gracza po dodaniu.
 	 */
-	public static void addCookies(Player p, int amount){
-		setCookies(p, getCookies(p.getUniqueId())+amount);
+	public static int addCookies(Player p, int amount){
+		int ret = getCookies(p.getUniqueId())+amount;
+		setCookies(p, ret);
+		return ret;
 	}
 	
 	/**
 	 * Dodaje ilosc ciastek amount do ogolnej liczby ciastek gracza z UUId uid.
 	 * @param uid UUID gracza ktoremu dodawane s¹ ciastka
 	 * @param amount Ilosc ciastek do dodania
+	 * @return Ilosc ciastek gracza po dodaniu.
 	 */
-	public static void addCookies(UUID uid, int amount){
-		setCookies(uid, getCookies(uid)+amount);
+	public static int addCookies(UUID uid, int amount){
+		int ret = getCookies(uid)+amount;
+		setCookies(uid, ret);
+		return ret;
 	}
 	
 	/**
 	 * Dodaje ilosc ciastek amount do ogolnej liczby ciastek gracza z nazw¹ name.
 	 * @param name Nazwa gracza ktoremu dodawane s¹ ciastka
 	 * @param amount Ilosc ciastek do dodania
+	 * @return Ilosc ciastek gracza po dodaniu.
 	 */
-	public static void addCookies(String name, int amount){
-		setCookies(name, getCookies(name)+amount);
+	public static int addCookies(String name, int amount){
+		int ret = getCookies(name)+amount;
+		setCookies(name, ret);
+		return ret;
+	}
+	
+	/**
+	 * Usuwa ciastka z konta gracza.
+	 * @param p Gracz z którego konta odejmujemy
+	 * @param amount Liczba ciastek do odjecia
+	 * @return Aktualna liczba ciastek na koncie gracza
+	 */
+	public static int removeCookies(Player p, int amount){
+		int ret = getCookies(p)-amount;
+		if (ret < 0) return 0;
+		setCookies(p, ret);
+		return ret;
+	}
+	
+	/**
+	 * Usuwa ciastka z konta gracza.
+	 * @param uid UUID gracza z którego konta odejmujemy
+	 * @param amount Liczba ciastek do odjecia
+	 * @return Aktualna liczba ciastek na koncie gracza
+	 */
+	public static int removeCookies(UUID uid, int amount){
+		int ret = getCookies(uid)-amount;
+		if (ret < 0) return 0;
+		setCookies(uid, ret);
+		return ret;
+	}
+	
+	/**
+	 * Usuwa ciastka z konta gracza.
+	 * @param name Nazwa gracza z którego konta odejmujemy
+	 * @param amount Liczba ciastek do odjecia
+	 * @return Aktualna liczba ciastek na koncie gracza
+	 */
+	public static int removeCookies(String name, int amount){
+		int ret = getCookies(name)-amount;
+		if (ret < 0) return 0;
+		setCookies(name, ret);
+		return ret;
 	}
 	
 	/**
@@ -139,7 +187,7 @@ public class CookieMoneyAPI{
 	}
 	
 	/**
-	 * Wylacza plugin (U¿ywac awaryjnie w przypadku duzych lagow)
+	 * Wylacza plugin (Uzywac awaryjnie w przypadku duzych lagow)
 	 */
 	public static void disable(){
 		Bukkit.getPluginManager().disablePlugin(cb.getPlugin());

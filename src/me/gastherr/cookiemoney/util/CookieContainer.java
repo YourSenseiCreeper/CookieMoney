@@ -16,7 +16,7 @@ public class CookieContainer{
 	
 	public Inventory createDepositeInventory(Player p){
 		int cookies = CookieMoneyAPI.getCookies(p);
-		Inventory in = Bukkit.createInventory(p, 36, "Cookie deposite");
+		Inventory in = Bukkit.createInventory(p, 36, "Cookie withdraw");
 		
 		if (cookies != 0){
 			in.addItem(new ItemStack(Material.COOKIE, cookies));
@@ -24,7 +24,7 @@ public class CookieContainer{
 		
 		ItemStack exit = new ItemStack(Material.EMERALD_BLOCK);
 		ItemMeta mExit = exit.getItemMeta();
-		mExit.setDisplayName(ChatColor.GREEN+""+ChatColor.BOLD+"EXIT");
+		mExit.setDisplayName(ChatColor.GREEN+""+ChatColor.BOLD+"CONFIRM");
 		exit.setItemMeta(mExit);
 		
 		in.setItem(in.getSize()-1, exit);
@@ -32,11 +32,11 @@ public class CookieContainer{
 	}
 	
 	public Inventory createDeponateInventory(Player p){
-		Inventory in = Bukkit.createInventory(p, 36, "Cookie deponate");
+		Inventory in = Bukkit.createInventory(p, 36, "Cookie deposite");
 		
 		ItemStack exit = new ItemStack(Material.EMERALD_BLOCK);
 		ItemMeta mExit = exit.getItemMeta();
-		mExit.setDisplayName(ChatColor.GREEN+""+ChatColor.BOLD+"EXIT");
+		mExit.setDisplayName(ChatColor.GREEN+""+ChatColor.BOLD+"CONFIRM");
 		exit.setItemMeta(mExit);
 		
 		in.setItem(in.getSize()-1, exit);
@@ -45,7 +45,27 @@ public class CookieContainer{
 	
 	public Inventory createInventory(Player p){
 		int cookies = CookieMoneyAPI.getCookies(p);
-		Inventory in = Bukkit.createInventory(p, 9*invSize(cookies), "Your account");
+		Inventory in = Bukkit.createInventory(p, 9, "Your account");
+		
+		invAdder(in, cookies);
+		
+		return in;
+	}
+	
+	/*
+	private int invSize(int cookies){
+		int size = 1;
+		if(cookies > 512) size = 2;
+		else if (cookies > 512+576) size = 3;
+		else if (cookies > 51+76*2) size = 4;
+		else if (cookies > 512+576*3) size = 4;
+		else if (cookies > 512+576*4) size = 5;
+		else if (cookies > 512+576*5) size = 6;
+		return size;
+	}
+	*/
+	
+	private void invAdder(Inventory in, int cookies){
 		
 		ItemStack depo = new ItemStack(Material.ENDER_CHEST);
 		ItemMeta mDepo = depo.getItemMeta();
@@ -65,18 +85,6 @@ public class CookieContainer{
 		in.setItem(in.getSize()-1, am);
 		in.addItem(depo);
 		in.addItem(withd);
-		return in;
-	}
-	
-	private int invSize(int cookies){
-		int size = 1;
-		if(cookies > 512) size = 2;
-		else if (cookies > 512+576) size = 3;
-		else if (cookies > 51+76*2) size = 4;
-		else if (cookies > 512+576*3) size = 4;
-		else if (cookies > 512+576*4) size = 5;
-		else if (cookies > 512+576*5) size = 6;
-		return size;
 	}
 
 

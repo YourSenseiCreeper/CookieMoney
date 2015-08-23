@@ -5,7 +5,9 @@ import java.util.UUID;
 
 import me.gastherr.cookiemoney.CookieBase;
 import me.gastherr.cookiemoney.CookieMoneyAPI;
+import me.gastherr.cookiemoney.util.CookieContainer;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,6 +15,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class InventoryEvents implements Listener{
 	
@@ -51,7 +54,9 @@ public class InventoryEvents implements Listener{
 	@EventHandler
 	public void onInteract(InventoryClickEvent e){
 		
-		if (e.getClickedInventory() != null){
+		Player p = (Player) e.getWhoClicked();
+		
+		if (e.getClickedInventory() != null && e.getClickedInventory().getName().equals("Cookie withdraw")){
 			if (e.getCurrentItem().getType().equals(Material.EMERALD_BLOCK)){
 				e.setCancelled(true);
 				int cookies = 0;
@@ -68,17 +73,15 @@ public class InventoryEvents implements Listener{
 					return;
 				}
 				
-				Player p = (Player) e.getWhoClicked();
-				
 				CookieMoneyAPI.setCookies(p, CookieMoneyAPI.getCookies(p)-allCks);
 				base.getSafeTransfer().put(e.getWhoClicked().getUniqueId(), true);
 				if (cookies != 0){
-					p.sendMessage("You deposited "+allCks+" cookies. You have now "+CookieMoneyAPI.getCookies(p)+" cookies!");
+					p.sendMessage("You withdrawed "+allCks+" cookies and you have now "+CookieMoneyAPI.getCookies(p)+" cookies!");
 				}
-				p.closeInventory();
+				p.openInventory(new CookieContainer().createInventory(p));
 			}
 		}
-		if (e.getClickedInventory() != null && e.getClickedInventory().getName().equals("Cookie deponate")){
+		if (e.getClickedInventory() != null && e.getClickedInventory().getName().equals("Cookie deposite")){
 			if (e.getCurrentItem().getType().equals(Material.EMERALD_BLOCK)){
 				e.setCancelled(true);
 				int cookies = 0;
@@ -89,17 +92,45 @@ public class InventoryEvents implements Listener{
 				}
 				CookieMoneyAPI.addCookies(e.getWhoClicked().getName(), cookies);
 				base.getSafeTransfer().put(e.getWhoClicked().getUniqueId(), true);
-				Player p = (Player)	e.getWhoClicked();
+
 				base.getSafeTransfer().put(e.getWhoClicked().getUniqueId(), true);
 				
 				if (cookies != 0){
-					p.sendMessage("You deponated "+cookies+" cookies. You have now "+CookieMoneyAPI.getCookies(p)+" cookies!");
+					p.sendMessage("You deposited "+cookies+" cookies and you have now "+CookieMoneyAPI.getCookies(p)+" cookies!");
 				}
 				
-				p.closeInventory();
+				p.openInventory(new CookieContainer().createInventory(p));
 			}
 		}
+		depositeAction(e, p);
+		deponateAction(e, p);
+		cookieAction(e, p);
 		
+	}
+	
+	private void depositeAction(InventoryClickEvent e, Player p){
+		if(e.getCurrentItem() != null && e.getCurrentItem().getType().equals(Material.ENDER_CHEST)){
+			e.setCancelled(true);
+			p.openInventory(new CookieContainer().createDeponateInventory(p));
+		}
+	}
+	
+	private void deponateAction(InventoryClickEvent e, Player p){
+		if(e.getCurrentItem() != null && e.getCurrentItem().getType().equals(Material.CHEST)){
+			e.setCancelled(true);
+			p.openInventory(new CookieContainer().createDepositeInventory(p));
+		}
+	}
+	
+	private void cookieAction(InventoryClickEvent e, Player p){
+		ItemStack ck = new ItemStack(Material.COOKIE);
+		ItemMeta mCk = ck.getItemMeta();
+		mCk.setDisplayName(ChatColor.GOLD+""+ChatColor.BOLD+CookieMoneyAPI.getCookies(p)+" COOKIES");
+		ck.setItemMeta(mCk);
+		
+		if(e.getCurrentItem().equals(ck)){
+			e.setCancelled(true);
+		}
 	}
 
 }

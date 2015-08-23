@@ -23,7 +23,7 @@ public class CookieBase {
 		players = cm.playerLoader();
 		safeTransfer = new HashMap<>();
 		
-		// new CookieAmountUpdater(this); FROZEN
+		// new CookieAmountUpdater(this); TO REMOVE
 		new PlayerInAndOut(this);
 		new InventoryEvents(this);
 		

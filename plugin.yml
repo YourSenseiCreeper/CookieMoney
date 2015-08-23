@@ -1,7 +1,9 @@
 name: CookieMoney
-version: 0.02
+version: 0.03
 main: me.gastherr.cookiemoney.CookieMoney
 authors: [gastherr]
 commands:
   cookies:
-    description: podaje ilosc twoich ciastek
+    description: otwiera panel konta ciastek
+  cookie:
+    description: otwiera panel konta ciastek
